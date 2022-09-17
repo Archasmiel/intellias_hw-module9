@@ -1,12 +1,11 @@
-package net.archasmiel.homework.collections;
+package net.archasmiel.homework.collections.list;
 
-import net.archasmiel.homework.collections.node.MyNode;
 import net.archasmiel.homework.collections.node.Node;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class MyLinkedList<E> implements MyList<E> {
+public class MyLinkedList<E> implements List<E> {
 
 	private Node<E> firstNode;
 	private Node<E> lastNode;
@@ -17,18 +16,18 @@ public class MyLinkedList<E> implements MyList<E> {
 	}
 
 	public MyLinkedList(E value) {
-		init(new MyNode<>(value));
+		init(new Node<>(value));
 		size++;
 	}
 
 	public MyLinkedList(E... elements) {
 		if (elements.length == 0) return;
 
-		init(new MyNode<>(elements[0]));
+		init(new Node<>(elements[0]));
 
 		Node<E> node;
 		for (int i = 1 ; i < elements.length ; i++) {
-			node = new MyNode<>(elements[i]);
+			node = new Node<>(elements[i]);
 			connectLast(node);
 		}
 
@@ -53,7 +52,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
 	@Override
 	public void add(E value) {
-		Node<E> node = new MyNode<>(value);
+		Node<E> node = new Node<>(value);
 		if (size <= 0) {
 			init(node);
 		} else {
@@ -166,7 +165,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder("MyArrayList{");
+		StringBuilder builder = new StringBuilder("MyLinkedList{");
 		if (firstNode != null) builder.append(firstNode.getData()).append(", ");
 
 		Iterator<E> iterator = iterator();

@@ -1,8 +1,8 @@
-package net.archasmiel.homework.collections;
+package net.archasmiel.homework.collections.list;
 
 import java.util.Arrays;
 
-public class MyArrayList<E> implements MyList<E> {
+public class MyArrayList<E> implements List<E> {
 
 	private Object[] array;
 
@@ -24,7 +24,7 @@ public class MyArrayList<E> implements MyList<E> {
 			return null;
 		}
 
-		E removed = (E) array[index];
+		Object removed = array[index];
 		Object[] newArray = new Object[newSize];
 		if (index > 0) {
 			System.arraycopy(array, 0, newArray, 0, index);
@@ -33,7 +33,7 @@ public class MyArrayList<E> implements MyList<E> {
 			System.arraycopy(array, index+1, newArray, index, newSize-index);
 		}
 		array = newArray;
-		return removed;
+		return (E) removed;
 	}
 
 	@Override

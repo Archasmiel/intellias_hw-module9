@@ -1,15 +1,34 @@
 package net.archasmiel.homework.collections.node;
 
-public interface Node<E> {
+public class Node<E> {
 
-	E getData();
+	private final E data;
+	private Node<E> previous;
+	private Node<E> next;
 
-	Node<E> getPrevious();
+	public Node(E content) {
+		this.data = content;
+	}
 
-	Node<E> setPrevious(Node<E> previous);
+	public E getData() {
+		return data;
+	}
 
-	Node<E> getNext();
+	public Node<E> getPrevious() {
+		return previous;
+	}
 
-	Node<E> setNext(Node<E> next);
+	public Node<E> setPrevious(Node<E> previous) {
+		this.previous = previous;
+		return this;
+	}
 
+	public Node<E> getNext() {
+		return next;
+	}
+
+	public Node<E> setNext(Node<E> next) {
+		this.next = next;
+		return this;
+	}
 }
