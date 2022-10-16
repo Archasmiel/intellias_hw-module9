@@ -1,4 +1,4 @@
-package net.archasmiel.homework.collections.node;
+package net.archasmiel.homework.collections.models;
 
 public class Node<E> {
 
@@ -31,4 +31,10 @@ public class Node<E> {
 		this.next = next;
 		return this;
 	}
+
+	public void connect(Node<E> node) {
+		this.setNext(node);
+		node.setPrevious(this);
+	}
+
 }

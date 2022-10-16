@@ -1,38 +1,47 @@
 package net.archasmiel.homework.collections.list;
 
-import java.util.Arrays;
-
 public class MyArrayList<E> implements List<E> {
 
+	private int expSize;
+	private int size;
 	private Object[] array;
 
 	public MyArrayList() {
-		array = new Object[0];
+		expSize = 10;
+		array = new Object[expSize];
+		size = 0;
 	}
 
 	@Override
 	public void add(E value) {
-		int newSize = array.length+1;
-		array = Arrays.copyOf(array, newSize);
+		int newSize = size+1;
+		if (expSize <= newSize) {
+			addSize();
+		}
+
 		array[newSize-1] = value;
+		size++;
+	}
+
+	private void addSize() {
+		expSize *= 2;
+		Object[] newArr = new Object[expSize];
+		System.arraycopy(array, 0, newArr, 0, size);
+		array = newArr;
 	}
 
 	@Override
 	public E remove(int index) {
-		int newSize = array.length - 1;
-		if (newSize < 0 || index > newSize) {
+		int newSize = size-1;
+		if (size == 0 || index < 0 || index >= size) {
 			return null;
 		}
 
 		Object removed = array[index];
-		Object[] newArray = new Object[newSize];
-		if (index > 0) {
-			System.arraycopy(array, 0, newArray, 0, index);
-		}
 		if (index < newSize) {
-			System.arraycopy(array, index+1, newArray, index, newSize-index);
+			System.arraycopy(array, index+1, array, index, newSize-index);
 		}
-		array = newArray;
+		size--;
 		return (E) removed;
 	}
 
@@ -47,19 +56,21 @@ public class MyArrayList<E> implements List<E> {
 
 	@Override
 	public void clear() {
-		array = new Object[0];
+		expSize = 10;
+		array = new Object[expSize];
+		size = 0;
 	}
 
 	@Override
 	public int size() {
-		return array.length;
+		return size;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder("MyArrayList{");
-		for (Object o: array) {
-			builder.append(o).append(", ");
+		for (int i = 0 ; i < size ; i++) {
+			builder.append(array[i]).append(", ");
 		}
 		if (size() != 0) {
 			builder.delete(builder.length()-2, builder.length());

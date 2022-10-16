@@ -1,59 +1,60 @@
 package net.archasmiel.homework.collections.stack;
 
-import net.archasmiel.homework.collections.queue.Queue;
-
-import java.util.Arrays;
-
 public class MyStack<E> implements Stack<E> {
 
+	private int expSize;
+	private int size;
 	private Object[] array;
 
 	public MyStack() {
-		array = new Object[0];
-	}
-
-	public MyStack(E value) {
-		array = new Object[]{value};
-	}
-
-	public MyStack(E... values) {
-		array = values;
+		expSize = 10;
+		array = new Object[expSize];
+		size = 0;
 	}
 
 	@Override
 	public void push(E value) {
-		int newSize = array.length+1;
-		array = Arrays.copyOf(array, newSize);
+		int newSize = size+1;
+		if (expSize <= newSize) {
+			addSize();
+		}
+
 		array[newSize-1] = value;
+		size++;
+	}
+
+	private void addSize() {
+		expSize *= 2;
+		Object[] newArr = new Object[expSize];
+		System.arraycopy(array, 0, newArr, 0, size);
+		array = newArr;
 	}
 
 	@Override
 	public E remove(int index) {
-		int newSize = array.length - 1;
-		if (newSize < 0 || index > newSize) {
+		int newSize = size-1;
+		if (newSize < 0 || index >= size) {
 			return null;
 		}
 
 		Object removed = array[index];
-		Object[] newArray = new Object[newSize];
-		if (index > 0) {
-			System.arraycopy(array, 0, newArray, 0, index);
-		}
 		if (index < newSize) {
-			System.arraycopy(array, index+1, newArray, index, newSize-index);
+			System.arraycopy(array, index+1, array, index, newSize-index);
 		}
-		array = newArray;
+		size--;
 		return (E) removed;
 	}
 
 	@Override
 	public void clear() {
-		array = new Object[0];
+		expSize = 10;
+		array = new Object[expSize];
+		size = 0;
 	}
 
 	@Override
 	public int size() {
-		return array.length;
+		return size;
 	}
 
 	@Override
@@ -69,8 +70,7 @@ public class MyStack<E> implements Stack<E> {
 	public E pop() {
 		E res = null;
 		if (size() > 0) {
-			res = (E) array[size()-1];
-			remove(size()-1);
+			res = remove(size()-1);
 		}
 		return res;
 	}
@@ -78,8 +78,8 @@ public class MyStack<E> implements Stack<E> {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder("MyStack{");
-		for (Object o: array) {
-			builder.append(o).append(", ");
+		for (int i = 0 ; i < size ; i++) {
+			builder.append(array[i]).append(", ");
 		}
 		if (size() != 0) {
 			builder.delete(builder.length()-2, builder.length());

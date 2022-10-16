@@ -13,7 +13,7 @@ import net.archasmiel.homework.collections.stack.Stack;
 public class Main {
 
 	public static void main(String[] args) {
-		testHashMap();
+		testQueue();
 	}
 
 	private static void testArrayList() {
@@ -68,7 +68,7 @@ public class Main {
 	}
 
 	private static void testQueue() {
-		Queue<String> queue = new MyQueue<>("0");
+		Queue<String> queue = new MyQueue<>();
 		queue.add("1");
 		queue.add("2");
 		queue.add("3");
@@ -101,73 +101,11 @@ public class Main {
 	}
 
 	private static void testStack() {
-		Stack<String> stack = new MyStack<>("0");
-		stack.push("1");
-		stack.push("2");
-		stack.push("3");
-		stack.push("4");
-		stack.push("5");
 
-		System.out.println(stack);
-		System.out.println(stack.peek());
-		System.out.println(stack);
-		System.out.println(stack.pop());
-		System.out.println(stack);
-		System.out.println(stack.pop());
-		System.out.println(stack.pop());
-		System.out.println(stack.pop());
-		System.out.println(stack.pop());
-		System.out.println(stack.pop());
-		System.out.println(stack);
-		System.out.println();
-
-		stack.push("1");
-		stack.push("2");
-		stack.push("3");
-		stack.push("4");
-		stack.push("5");
-		System.out.println(stack);
-		System.out.println(stack.size());
-		stack.clear();
-		System.out.println(stack);
-		System.out.println(stack.size());
 	}
 
 	private static void testHashMap() {
-		HashMap<Integer, String> map = new MyHashMap<>();
-		map.put(1, "111");
-		map.put(2, "22");
-		map.put(3, "3");
-		map.put(4, "4444");
-		map.put(5, "55555");
 
-		System.out.println(map + " " + map.size());
-
-		System.out.println(map.get(1));
-		System.out.println(map.get(2));
-		System.out.println(map.get(3));
-		System.out.println(map.get(4));
-		System.out.println(map.get(5));
-
-		map.remove(1);
-		map.remove(3);
-		map.remove(5);
-		System.out.println(map + " " + map.size());
-
-		map.put(1, "1");
-		map.put(2, "2");
-		map.put(3, "3");
-		map.put(4, "4");
-		map.put(5, "5");
-		System.out.println(map + " " + map.size());
-		System.out.println(map.get(1));
-		System.out.println(map.get(2));
-		System.out.println(map.get(3));
-		System.out.println(map.get(4));
-		System.out.println(map.get(5));
-
-		map.clear();
-		System.out.println(map + " " + map.size());
 	}
 
 }

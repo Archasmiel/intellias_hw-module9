@@ -1,6 +1,6 @@
 package net.archasmiel.homework.collections.list;
 
-import net.archasmiel.homework.collections.node.Node;
+import net.archasmiel.homework.collections.models.Node;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -12,36 +12,7 @@ public class MyLinkedList<E> implements List<E> {
 	int size;
 
 	public MyLinkedList() {
-		size = 0;
-	}
-
-	public MyLinkedList(E value) {
-		init(new Node<>(value));
-		size++;
-	}
-
-	public MyLinkedList(E... elements) {
-		if (elements.length == 0) return;
-
-		init(new Node<>(elements[0]));
-
-		Node<E> node;
-		for (int i = 1 ; i < elements.length ; i++) {
-			node = new Node<>(elements[i]);
-			connectLast(node);
-		}
-
-		size = elements.length;
-	}
-
-	private void connect(Node<E> node1, Node<E> node2) {
-		node1.setNext(node2);
-		node2.setPrevious(node1);
-	}
-
-	private void connectLast(Node<E> node) {
-		connect(lastNode, node);
-		lastNode = node;
+		clear();
 	}
 
 	private void init(Node<E> node) {
@@ -56,16 +27,29 @@ public class MyLinkedList<E> implements List<E> {
 		if (size <= 0) {
 			init(node);
 		} else {
-			connectLast(node);
+			lastNode.connect(node);
+			lastNode = node;
 			size++;
 		}
 	}
 
 	@Override
 	public E remove(int index) {
-		int newSize = size-1;
-		if (index >= newSize || index < 0) {
+		if (size == 0 || index >= size || index < 0) {
 			return null;
+		}
+
+		if (index == 0) {
+			E res = firstNode.getData();
+			firstNode = firstNode.getNext();
+			size--;
+			return res;
+		}
+		if (index == size-1) {
+			E res = lastNode.getData();
+			lastNode = lastNode.getPrevious();
+			size--;
+			return res;
 		}
 
 		int i = 0;
@@ -148,7 +132,7 @@ public class MyLinkedList<E> implements List<E> {
 				Node<E> node2 = current.getNext();
 
 				if (node1 != null && node2 != null) {
-					connect(node1, node2);
+					node1.connect(node2);
 				} else
 				if (node1 != null) {
 					list.lastNode = node1.setNext(null);
